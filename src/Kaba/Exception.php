@@ -29,9 +29,10 @@ class Exception extends \Exception
     private function codeToMessage($code)
     {
         switch ($code) {
+            case self::S_NO_ERROR:
+                return "No Error.";
             default:
                 return "Unknown Error";
-                break;
         }
     }
 }

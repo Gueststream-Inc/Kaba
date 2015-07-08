@@ -30,6 +30,7 @@ class Kaba
         DateTime $start_date,
         DateTime $end_date
     ) {
+        $params = [];
         $params['SiteName'] = $site_name;
         $params['DoorName'] = $door_name;
         $params['StartDate'] = $start_date->format("m/d/Y");
@@ -45,20 +46,18 @@ class Kaba
             case 1:
                 // Confirm last code is being called.
                 return $this->sendRequestWithLevel(0, $params, 1);
-                break;
             case 2:
                 // Confirm higher sequence.
                 return $this->sendRequestWithLevel(0, $params, 2);
-                break;
             default:
                 // Generating new code.
                 return $this->sendRequestWithLevel(0, $params, 5);
-                break;
         }
     }
 
     public function sendRequestWithLevel($level, $params, $action_type = null)
     {
+        $params = [];
         $params['UserLevel'] = $level;
 
         if ($action_type) {
@@ -84,9 +83,6 @@ class Kaba
 
             return false;
         }
-
-        var_dump($parameters);
-        var_dump($response);
 
         return $response;
     }
