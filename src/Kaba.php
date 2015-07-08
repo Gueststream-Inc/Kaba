@@ -2,11 +2,11 @@
 
 namespace CodeJet;
 
+use DateTime;
+
 class Kaba
 {
-    private $api_url = 'https://www.kaba-ecode.com/KWWS_WS/KWWSService.asmx?wsdl';
-    private $username;
-    private $password;
+    use Kaba\Properties;
 
     /**
      * Kaba Class Construct
@@ -17,51 +17,77 @@ class Kaba
         $this->setPassword($password);
     }
 
-    /**
-     * @return string
-     */
-    public function getApiUrl()
+    public function requestDoorCode($site_name, $door_name, DateTime $start_date, DateTime $end_date)
     {
-        return $this->api_url;
+        $result = $this->sendGenerateAccessCode($site_name, $door_name, $start_date, $end_date);
+
+        return $result->AccessCode;
     }
 
-    /**
-     * @param string $api_url
-     */
-    public function setApiUrl($api_url)
-    {
-        $this->api_url = $api_url;
+    public function sendGenerateAccessCode(
+        $site_name,
+        $door_name,
+        DateTime $start_date,
+        DateTime $end_date
+    ) {
+        $params['SiteName'] = $site_name;
+        $params['DoorName'] = $door_name;
+        $params['StartDate'] = $start_date->format("m/d/Y");
+        $params['EndDate'] = $end_date->format("m/d/Y");
+
+        $initial_response = $this->sendRequestWithLevel(0, $params);
+
+        if (!$initial_response) {
+            return false;
+        }
+
+        switch ($initial_response->ReturnStatus) {
+            case 1:
+                // Confirm last code is being called.
+                return $this->sendRequestWithLevel(0, $params, 1);
+                break;
+            case 2:
+                // Confirm higher sequence.
+                return $this->sendRequestWithLevel(0, $params, 2);
+                break;
+            default:
+                // Generating new code.
+                return $this->sendRequestWithLevel(0, $params, 5);
+                break;
+        }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUsername()
+    public function sendRequestWithLevel($level, $params, $action_type = null)
     {
-        return $this->username;
+        $params['UserLevel'] = $level;
+
+        if ($action_type) {
+            $params['ActionType'] = $action_type;
+        }
+
+        return $this->call('GenerateAccessCode', $params);
     }
 
-    /**
-     * @param mixed $username
-     */
-    public function setUsername($username)
+    private function call($call, $params = null)
     {
-        $this->username = $username;
-    }
+        $parameters['LoginName'] = $this->getUsername();
+        $parameters['Password'] = $this->getPassword();
 
-    /**
-     * @return mixed
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+        if (is_array($params)) {
+            $parameters = array_merge($parameters, $params);
+        }
 
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+        try {
+            $response = $this->getClient()->$call($parameters);
+        } catch (\SoapFault $soapFault) {
+            $this->soapError = $soapFault->getMessage();
+
+            return false;
+        }
+
+        var_dump($parameters);
+        var_dump($response);
+
+        return $response;
     }
 }

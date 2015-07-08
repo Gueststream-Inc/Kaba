@@ -2,10 +2,10 @@
 
 namespace CodeJet\Test;
 
+use CodeJet\Kaba;
+
 class KabaTest extends \PHPUnit_Framework_TestCase
 {
-
-
     /**
      * Test that true does in fact equal true
      */
