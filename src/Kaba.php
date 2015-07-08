@@ -57,7 +57,6 @@ class Kaba
 
     public function sendRequestWithLevel($level, $params, $action_type = null)
     {
-        $params = [];
         $params['UserLevel'] = $level;
 
         if ($action_type) {
@@ -69,6 +68,7 @@ class Kaba
 
     private function call($call, $params = null)
     {
+        $parameters = [];
         $parameters['LoginName'] = $this->getUsername();
         $parameters['Password'] = $this->getPassword();
 
