@@ -1,8 +1,8 @@
 <?php
 
-namespace League\Skeleton\Test;
+namespace CodeJet\Test;
 
-class ExampleTest extends \PHPUnit_Framework_TestCase
+class KabaTest extends \PHPUnit_Framework_TestCase
 {
 
 
