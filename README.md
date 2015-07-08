@@ -1,8 +1,8 @@
 # Kaba
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Latest Version on Packagist][ico-version]][https://packagist.org/packages/codejet/kaba]
 [![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
+[![Build Status][ico-travis]][https://travis-ci.org/CodeJetNet/Kaba]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -60,7 +60,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-downloads]: https://img.shields.io/packagist/dt/league/:package_name.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/codejet/kaba
-[link-travis]: https://travis-ci.org/codejet/kaba
+[link-travis]: https://travis-ci.org/CodeJetNet/Kaba
 [link-scrutinizer]: https://scrutinizer-ci.com/g/codejet/kaba/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/codejet/kaba
 [link-downloads]: https://packagist.org/packages/codejet/kaba
